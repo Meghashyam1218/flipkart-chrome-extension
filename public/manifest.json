@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "version": "1.0.0",
+  "name": "extension1",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["scripting", "storage", "tabs"],
+  "host_permissions": ["https://www.flipkart.com/*"],
+  "icons": {
+    "32": "icon.svg"
+  }
+}
