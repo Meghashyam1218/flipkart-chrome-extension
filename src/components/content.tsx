@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import Chat from "./chat";
-import Input from "./input";
+import Input from "./chat-components/input";
 interface QA {
   question: string;
   answer: string;
@@ -23,7 +23,7 @@ const Content: React.FC = () => {
     if (value.trim()) {
       try {
         const response = await fetch(
-          "https://cbdd-34-83-247-89.ngrok-free.app/suggest",
+          "https://5977-35-223-103-240.ngrok-free.app/suggest",
           {
             method: "POST",
             headers: {
@@ -80,7 +80,7 @@ const Content: React.FC = () => {
       try {
         // Simulate an API call to get the answer
         const response = await fetch(
-          "https://1915-117-250-66-185.ngrok-free.app/ans",
+          "https://1fa5-117-250-66-185.ngrok-free.app/ans",
           {
             method: "POST",
             headers: {
