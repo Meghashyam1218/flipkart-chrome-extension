@@ -27,7 +27,7 @@ const Content: React.FC = () => {
           {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              "Content-Type": "application/jsossn",
               Accept: "application/json",
             },
             body: JSON.stringify({
