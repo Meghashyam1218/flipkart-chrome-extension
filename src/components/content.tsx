@@ -8,9 +8,54 @@ interface QA {
 const Content: React.FC = () => {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [summary, setSummary] = useState("");
+  const [loadingSummary, setLoadingSummary] = useState(true);
   const [qaList, setQAList] = useState<QA[]>([]);
   const [suggestions, setSuggestions] = useState([]);
   const latestQuestionRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const fetchSummaryOnLoad = async () => {
+      setLoadingSummary(true);
+      setSummary("Generating Summary");
+
+      // const url =
+      // "https://www.flipkart.com/acer-predator-helios-16-intel-core-i9-14th-gen-14900hx-32-gb-1-tb-ssd-windows-11-home-12-gb-graphics-nvidia-geforce-rtx-4080-ph16-72-gaming-laptop/p/itm2aa2aa5c3717e?pid=COMGYSFGUBASFDY6&lid=LSTCOMGYSFGUBASFDY6RATW51&marketplace=FLIPKART&store=4rr%2Ftz1&srno=b_1_1&otracker=browse&fm=organic&iid=en_g_teokUtqGFd4sl-kkGacX4YEnSChpF2uZ_08_weFxAjKU3wFU-1YkV9cJMzU5Dpi3_LS3IH-junE-707tuROfUFjCTyOHoHZs-Z5_PS_w0%3D&ppt=hp&ppn=homepage&ssid=enrj27pxn40000001724910872288";
+
+      try {
+        let [tab] = await chrome.tabs.query({ active: true });
+        const url = tab.url;
+        const response = await fetch(
+          "https://7b66-117-250-71-121.ngrok-free.app/summarize",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({ url }),
+          },
+        );
+
+        if (response.status === 200) {
+          const data = await response.json();
+          console.log(data);
+          const summary = data.summary || "Summary not available.";
+          setSummary(summary);
+        } else {
+          console.log(response.status, response.json());
+          setSummary("Failed to fetch Summary");
+        }
+      } catch (error) {
+        console.error("Failed to fetch the summary:", error);
+        setSummary("Failed to fetch Summary");
+      } finally {
+        setLoadingSummary(false);
+      }
+    };
+
+    fetchSummaryOnLoad();
+  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInput(event.target.value);
@@ -162,6 +207,8 @@ const Content: React.FC = () => {
         latestQuestionRef={latestQuestionRef}
         qaList={qaList}
         loading={loading}
+        loadingSummary={loadingSummary}
+        summary={summary}
       />
       <Input
         input={input}

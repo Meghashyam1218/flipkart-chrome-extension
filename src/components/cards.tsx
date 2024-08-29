@@ -9,7 +9,7 @@ const Cards: React.FC<CardProps> = ({ url, img, title }) => {
     <>
       <a
         href={url}
-        className="group relative max-h-[150px] max-w-[150px] cursor-pointer rounded-lg bg-white"
+        className="group relative cursor-pointer rounded-lg bg-white"
       >
         <img
           className="relative mx-auto aspect-square overflow-hidden object-contain"
